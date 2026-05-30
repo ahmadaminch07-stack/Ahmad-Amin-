@@ -1,0 +1,512 @@
+<html>
+<head>
+<title>Cyber Utility</title>
+
+<style>
+/* Body */
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    color: #00ff99;
+    background: black;
+}
+
+/* Container Box */
+.box {
+    background: #1c1f26;
+    width: 720px;
+    max-width: 90%;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 255, 153, 0.4);
+    border: 1px solid #00ff99;
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    box-shadow: 0 15px 35px rgba(0, 255, 153, 0.6);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid #00ff99;
+    background: #0b0c10;
+    color: #00ff99;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #00ff99;
+    color: #0b0c10;
+    transform: scale(1.05);
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    margin-top: 12px;
+    display: block;
+    font-size: 14px;
+}
+
+/* Inputs & Textareas & Selects */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-family: "Fira Code", monospace;
+    background: #0b0c10;
+    border: 1px solid #00ff99;
+    border-radius: 6px;
+    color: #00ff99;
+    font-size: 14px;
+}
+
+/* iFrame */
+iframe {
+    width: 100%;
+    height: 80px;
+    margin-top: 12px;
+    border-radius: 6px;
+    background: #0b0c10;
+    border: 1px solid #00ff99;
+}
+
+/* Scrollbar for Inputs/Textareas */
+textarea::-webkit-scrollbar,
+input::-webkit-scrollbar {
+    width: 8px;
+}
+
+textarea::-webkit-scrollbar-thumb,
+input::-webkit-scrollbar-thumb {
+    background: #00ff99;
+    border-radius: 4px;
+}
+
+/* POPUP OVERLAY */
+.popupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* POPUP BOX */
+.popupBox {
+    background: #1c1f26;
+    width: 500px;
+    max-width: 90%;
+    max-height: 80vh;       
+    overflow-y: auto;       
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #00ff99;
+    box-shadow: 0 10px 25px rgba(0,255,153,0.5);
+}
+</style>
+</head>
+
+<body>
+<div class="box">
+
+<h2 style="text-align:center"><b>Cyber Utility</b></h2>
+
+<!-- MENU BUTTONS -->
+<button onclick="openPopup('avgPopup')">Average</button>
+<button onclick="openPopup('attackPopup')">Brute Force</button>
+<button onclick="openPopup('convPopup')">Base Conversion</button>
+<button onclick="openPopup('cryptoPopup')">Crypto Lab</button>
+<button onclick="openPopup('cubePopup')">Cube Root</button>
+<button onclick="openPopup('fracPopup')">Fractions & Binary</button>
+<button onclick="openPopup('factPopup')">Factorial</button>
+<button onclick="openPopup('gcdPopup')">GCD</button>
+<button onclick="openPopup('gatesPopup')">Logic Gates</button>
+<button onclick="openPopup('matrixPopup')">Matrix</button>
+<button onclick="openPopup('modPopup')">MOD (Power)</button>
+<button onclick="openPopup('modinvPopup')">Multiplicative Inverse</button>
+<button onclick="openPopup('probPopup')">Probability</button>
+<button onclick="openPopup('percentPopup')">Percentage</button>
+<button onclick="openPopup('sopPopup')">Sum of Products</button>
+
+
+</div>
+
+<!-- ================== POPUPS ================== -->
+
+<!-- PROBABILITY -->
+<div id="probPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Probability Calculator</h3>
+    <label>Favorable Outcomes</label><input id="fav">
+    <label>Total Outcomes</label><input id="total">
+    <button onclick="calcProb()">Basic Probability</button>
+    <label>Number of Successes</label><input id="succ">
+    <label>Number of Trials</label><input id="trials">
+    <button onclick="calcBinomial()">Binomial Probability</button>
+    <button onclick="closePopup('probPopup')">Close</button>
+    <iframe id="probOut"></iframe>
+  </div>
+</div>
+
+<!-- MOD -->
+<div id="modPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>MOD with Power</h3>
+    <label>Base (a)</label><input id="modA">
+    <label>Power</label><input id="modP">
+    <label>Modulus (b)</label><input id="modB">
+    <button onclick="calcMod()">OUTPUT</button>
+    <iframe id="modOut"></iframe>
+    <button onclick="closePopup('modPopup')">Close</button>
+  </div>
+</div>
+
+<!-- MOD INVERSE -->
+<div id="modinvPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Multiplicative Inverse</h3>
+    <label>Number (a)</label><input id="invA">
+    <label>Modulus (m)</label><input id="invM">
+    <button onclick="calcModInverse()">OUTPUT</button>
+    <iframe id="modInvOut"></iframe>
+    <button onclick="closePopup('modinvPopup')">Close</button>
+  </div>
+</div>
+
+<!-- GCD -->
+<div id="gcdPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Greatest Common Divisor</h3>
+    <label>First Number</label><input id="gcdA">
+    <label>Second Number</label><input id="gcdB">
+    <button onclick="calcGCD()">OUTPUT</button>
+    <iframe id="gcdOut"></iframe>
+    <button onclick="closePopup('gcdPopup')">Close</button>
+  </div>
+</div>
+
+<!-- LOGIC GATES -->
+<div id="gatesPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Logic Gates</h3>
+    <label>Select Gate</label>
+    <select id="gateType">
+      <option>AND</option><option>OR</option><option>NOT</option>
+      <option>NAND</option><option>NOR</option><option>XOR</option><option>XNOR</option>
+    </select>
+    <label>Input A</label><input id="gA">
+    <label>Input B</label><input id="gB">
+    <button onclick="calcGate()">OUTPUT</button>
+    <iframe id="gateOut"></iframe>
+    <button onclick="closePopup('gatesPopup')">Close</button>
+  </div>
+</div>
+
+<!-- BASE CONVERSION -->
+<div id="convPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Base Conversion</h3>
+    <label>Number</label><input id="number">
+    <label>From Base</label>
+    <select id="fromBase">
+      <option value="2">2</option><option value="8">8</option>
+      <option value="10">10</option><option value="16">16</option>
+    </select>
+    <label>To Base</label>
+    <select id="toBase">
+      <option value="2">2</option><option value="8">8</option>
+      <option value="10">10</option><option value="16">16</option>
+    </select>
+    <button onclick="convertBase()">OUTPUT</button>
+    <iframe id="convOut"></iframe>
+    <button onclick="closePopup('convPopup')">Close</button>
+  </div>
+</div>
+
+<!-- FRACTIONS & BINARY -->
+<div id="fracPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Fractions & Binary</h3>
+    <label>Decimal Number</label><input id="decFrac">
+    <button onclick="decFracOut.src=blob(decimalToFraction(+decFrac.value))">Decimal → Fraction</button>
+    <label>Binary A</label><input id="binA">
+    <label>Binary B</label><input id="binB">
+    <button onclick="binOut.src=blob(binAdd(binA.value,binB.value))">Binary Add</button>
+    <button onclick="binOut.src=blob(binMul(binA.value,binB.value))">Binary Multiply</button>
+    <label>Fraction 1 (a/b)</label><input id="fa"><input id="fb">
+    <label>Fraction 2 (c/d)</label><input id="fc"><input id="fd">
+    <button onclick="fracOut.src=blob(addFrac(+fa.value,+fb.value,+fc.value,+fd.value))">Add Fractions</button>
+    <button onclick="fracOut.src=blob(cmpFrac(+fa.value,+fb.value,+fc.value,+fd.value))">Compare Fractions</button>
+<div style="display:flex;gap:5px;flex-wrap:wrap;">
+  <iframe id="decFracOut" style="flex:1;min-height:60px;"></iframe>
+  <iframe id="binOut" style="flex:1;min-height:60px;"></iframe>
+  <iframe id="fracOut" style="flex:1;min-height:60px;"></iframe>
+</div>
+
+    <button onclick="closePopup('fracPopup')">Close</button>
+  </div>
+</div>
+
+<!-- PERCENTAGE -->
+<div id="percentPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Percentage Calculator</h3>
+    <label>Base Value</label><input id="perBase">
+    <label>Percentage</label><input id="perVal">
+    <button onclick="perOut.src=blob((+perBase.value*+perVal.value)/100)">OUTPUT</button>
+    <iframe id="perOut"></iframe>
+    <button onclick="closePopup('percentPopup')">Close</button>
+  </div>
+</div>
+
+<!-- FACTORIAL -->
+<div id="factPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Factorial</h3>
+    <label>Number</label><input id="factN">
+    <button onclick="factOut.src=blob(factorial(+factN.value))">OUTPUT</button>
+    <iframe id="factOut"></iframe>
+    <button onclick="closePopup('factPopup')">Close</button>
+  </div>
+</div>
+
+<!-- CUBE ROOT -->
+<div id="cubePopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Cube Root</h3>
+    <label>Number</label><input id="cubeN">
+    <button onclick="cubeOut.src=blob(Math.cbrt(+cubeN.value))">OUTPUT</button>
+    <iframe id="cubeOut"></iframe>
+    <button onclick="closePopup('cubePopup')">Close</button>
+  </div>
+</div>
+
+<!-- AVERAGE -->
+<div id="avgPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Average</h3>
+    <label>Numbers (space separated)</label><input id="avgArr">
+    <button onclick="avgOut.src=blob(average(avgArr.value.split(/\s+/).map(Number)))">OUTPUT</button>
+    <iframe id="avgOut"></iframe>
+    <button onclick="closePopup('avgPopup')">Close</button>
+  </div>
+</div>
+
+<!-- SUM OF PRODUCTS -->
+<div id="sopPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Sum of Products</h3>
+    <label>Array A</label><input id="spa">
+    <label>Array B</label><input id="spb">
+    <button onclick="sopOut.src=blob(sumOfProducts(spa.value.split(/\s+/).map(Number),spb.value.split(/\s+/).map(Number)))">OUTPUT</button>
+    <iframe id="sopOut"></iframe>
+    <button onclick="closePopup('sopPopup')">Close</button>
+  </div>
+</div>
+
+<!-- MATRIX -->
+<div id="matrixPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Matrix Operations</h3>
+    <label>Select Operation</label>
+    <select id="op">
+        <option value="ADD">ADD</option>
+        <option value="SUB">SUB</option>
+        <option value="MUL">MUL</option>
+        <option value="TRANSPOSE">TRANSPOSE</option>
+    </select>
+    <label>Number of Rows</label><input id="r" oninput="createMatrices()">
+    <label>Number of Columns</label><input id="c" oninput="createMatrices()">
+    <h4>Matrix A</h4><div id="matrixA"></div>
+    <h4>Matrix B</h4><div id="matrixB"></div>
+
+    <button onclick="calcMatrix()">OUTPUT</button>
+    <iframe id="matOut"></iframe>
+    <button onclick="closePopup('matrixPopup')">Close</button>
+  </div>
+</div>
+
+<!-- CRYPTO -->
+<div id="cryptoPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Crypto Lab</h3>
+    <label>Enter Text</label><input id="cryptoText">
+    <button onclick="cryptoOut.srcdoc = cyberOutput(textToBinary(cryptoText.value))">View Binary</button>
+    <button onclick="cryptoOut.srcdoc = cyberOutput(textToHex(cryptoText.value))">View HEX</button>
+    <button onclick="cryptoOut.srcdoc = cyberOutput(simpleHash(cryptoText.value))">Generate Hash</button>
+    <iframe id="cryptoOut"></iframe>
+    <button onclick="closePopup('cryptoPopup')">Close</button>
+  </div>
+</div>
+
+<!-- BRUTE FORCE -->
+<div id="attackPopup" class="popupOverlay">
+  <div class="popupBox">
+    <h3>Brute Force PIN Simulator</h3>
+    <label>Enter PIN (4 digits)</label><input id="pinInput">
+    <button onclick="attackOut.srcdoc = cyberOutput(bruteForcePIN(pinInput.value))">Simulate Attack</button>
+    <iframe id="attackOut"></iframe>
+    <button onclick="closePopup('attackPopup')">Close</button>
+  </div>
+</div>
+
+
+
+
+<script>
+/* ================== GENERAL FUNCTIONS ================== */
+function openPopup(id){document.getElementById(id).style.display="flex";}
+function closePopup(id){document.getElementById(id).style.display="none";}
+
+function blob(t){return URL.createObjectURL(new Blob([t],{type:"text/plain"}));}
+function calcMod(){modOut.src=blob(Math.pow(+modA.value,+modP.value)%+modB.value);}
+function calcModInverse(){modInvOut.src=blob(modInverse(+invA.value,+invM.value));}
+function modInverse(a,m){let m0=m,x0=0,x1=1;while(a>1){let q=Math.floor(a/m);[a,m]=[m,a%m];[x0,x1]=[x1-q*x0,x0];}return x1<0?x1+m0:x1;}
+function calcGCD(){let a=+gcdA.value,b=+gcdB.value;while(b)[a,b]=[b,a%b];gcdOut.src=blob(a);}
+
+function convertBase() {
+    let num = document.getElementById("number").value;
+    let fromBase = parseInt(document.getElementById("fromBase").value);
+    let toBase = parseInt(document.getElementById("toBase").value);
+
+    // Convert input number from "fromBase" to decimal
+    let decimal = parseInt(num, fromBase);
+    if (isNaN(decimal)) {
+        convOut.src = blob("Invalid Input!");
+        return;
+    }
+
+    // Convert decimal to "toBase"
+    let result = decimal.toString(toBase).toUpperCase();
+
+    convOut.src = blob(result);
+}
+
+function decimalToFraction(x){let d=1;while(x%1){x*=10;d*=10;}return x+"/"+d;}
+function binAdd(a,b){return (parseInt(a,2)+parseInt(b,2)).toString(2);}
+function binMul(a,b){return (parseInt(a,2)*parseInt(b,2)).toString(2);}
+function addFrac(a,b,c,d){return (a*d+b*c)+"/"+(b*d);}
+function cmpFrac(a,b,c,d){return a*d>c*b?"First > Second":a*d<c*b?"Second > First":"Equal";}
+function factorial(n){return n<=1?1:n*factorial(n-1);}
+function average(a){return a.reduce((x,y)=>x+y,0)/a.length;}
+function sumOfProducts(a,b){return a.reduce((s,v,i)=>s+v*b[i],0);}
+function textToBinary(text){return text.split("").map(c=>c.charCodeAt(0).toString(2).padStart(8,"0")).join(" ");}
+function textToHex(text){return text.split("").map(c=>c.charCodeAt(0).toString(16).toUpperCase()).join(" ");}
+function simpleHash(text){let hash=0;for(let i=0;i<text.length;i++){hash=(hash+text.charCodeAt(i)*(i+1))%1000000007;}return "HASH: "+hash.toString(16).toUpperCase();}
+
+function bruteForcePIN(pin){pin=pin.toString();let attempts=0;for(let i=0;i<=9999;i++){attempts++;if(i.toString().padStart(pin.length,"0")===pin) break;}return "PIN cracked in "+attempts+" attempts";}
+function createMatrices() {
+    let r = parseInt(document.getElementById("r").value);
+    let c = parseInt(document.getElementById("c").value);
+    if (!r || !c) return;
+
+    let matrixA = document.getElementById("matrixA");
+    let matrixB = document.getElementById("matrixB");
+
+    matrixA.innerHTML = "";
+    matrixB.innerHTML = "";
+
+    for (let i = 0; i < r; i++) {
+        let rowA = document.createElement("div");
+        let rowB = document.createElement("div");
+        rowA.style.display = "flex";
+        rowA.style.gap = "5px";
+        rowB.style.display = "flex";
+        rowB.style.gap = "5px";
+
+        for (let j = 0; j < c; j++) {
+            let aInput = document.createElement("input");
+            aInput.type = "number";
+            aInput.style.width = "50px";
+            aInput.id = `a-${i}-${j}`;
+            rowA.appendChild(aInput);
+
+            let bInput = document.createElement("input");
+            bInput.type = "number";
+            bInput.style.width = "50px";
+            bInput.id = `b-${i}-${j}`;
+            rowB.appendChild(bInput);
+        }
+
+        matrixA.appendChild(rowA);
+        matrixB.appendChild(rowB);
+    }
+}
+
+function calcProb() {
+    let fav = +document.getElementById("fav").value;
+    let total = +document.getElementById("total").value;
+    if (!fav || !total) return;
+    let result = fav / total;
+    probOut.src = blob("Probability = " + result);
+}
+
+function calcBinomial() {
+    let n = +document.getElementById("trials").value;
+    let k = +document.getElementById("succ").value;
+    let p = +document.getElementById("fav").value / +document.getElementById("total").value;
+
+    if (!n || !k || p === 0) return;
+
+    function factorial(x) { return x <= 1 ? 1 : x * factorial(x - 1); }
+    function comb(n, k) { return factorial(n) / (factorial(k) * factorial(n - k)); }
+
+    let result = comb(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+    probOut.src = blob("Binomial Probability = " + result);
+}
+
+function calcGate() {
+    let a = +document.getElementById("gA").value;
+    let b = +document.getElementById("gB").value;
+    let gate = document.getElementById("gateType").value;
+    let res;
+
+    switch(gate) {
+        case "AND": res = a & b; break;
+        case "OR": res = a | b; break;
+        case "NOT": res = a ^ 1; break; // Only flips A
+        case "NAND": res = 1 - (a & b); break;
+        case "NOR": res = 1 - (a | b); break;
+        case "XOR": res = a ^ b; break;
+        case "XNOR": res = 1 - (a ^ b); break;
+        default: res = "Error";
+    }
+
+    gateOut.src = blob("Output = " + res);
+}
+
+
+
+
+function cyberOutput(text){
+    return `
+    <html>
+    <body style="background:black;color:#22c55e;font-family:Courier New;padding:10px">
+    <pre>> ${text}</pre>
+    </body>
+    </html>
+    `;
+}
+</script>
+</body>
+</html>
+
